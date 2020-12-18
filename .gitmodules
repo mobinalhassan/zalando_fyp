@@ -1,0 +1,3 @@
+[submodule "commonutils"]
+	path = commonutils
+	url = https://gitlab.com/snapthatxyz/core/commonutils.git

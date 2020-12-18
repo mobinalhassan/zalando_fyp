@@ -1,0 +1,32 @@
+image: python:3-alpine
+
+stages:
+  - test
+  - build
+
+before_script:
+  - apk update
+  - apk add bash
+
+
+tests:
+  # Test stage (you can use another test tool)
+  stage: test
+#  script: pip install pytest==3.0.5 && py.test simple_lib/tests/ -v
+  script:
+    - bash -c "echo 'test stage update update'"
+
+wheel:
+  stage: build
+  script:
+    - pip install setuptools
+    - pip install wheel
+    - pip install gitlab-release
+    - python setup.py sdist bdist_wheel
+    - gitlab-release --link-artifact dist/*
+  artifacts:
+    paths:
+    - dist/
+  only:
+    - tags
+    #expire_in: 1 week
